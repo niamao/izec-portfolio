@@ -12,14 +12,10 @@ export function AppHeader() {
 				<div className="flex justify-between items-center gap-3">
 					<Logo />
 					<div className="flex items-center gap-5">
-						{isMobile ? <MobileMenu /> : (
-							<>
-								<Menu />
-								<span className="md:ml-4 md:mt-1">
-									<ThemeSwitcher />
-								</span>
-							</>
-						)}
+						{isMobile ? <MobileMenu /> : <Menu />}
+						<span className="md:ml-4 mt-1">
+							<ThemeSwitcher />
+						</span>
 					</div>
 				</div>
 			</div>

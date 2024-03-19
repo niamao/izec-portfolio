@@ -24,7 +24,12 @@ export function WelcomeSection() {
 	const { scrollToEl } = useScrollTo();
 
 	let [count, setCount] = useState(0);
-	const [text, setText] = useState([]);
+	const [text, setText] = useState([
+		'build dynamic web apps with modern tech',
+		'develop interactive and responsive UIs',
+		'craft feature-rich sites with modern tools',
+		'create engaging UX using React and Next.js'
+	]);
 
 	const onClick = (e) => scrollToEl(e);
 

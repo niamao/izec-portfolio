@@ -39,11 +39,6 @@ export function Menu({ onClick = () => {} }) {
 						</a>
 					</li>
 				))}
-				{isMobile && (
-					<li key='theme_switcher' className="mt-2.5 md:ml-2.5">
-						<ThemeSwitcher />
-					</li>
-				)}
 			</ul>
 		</m.nav>
 	);
@@ -64,7 +59,7 @@ export function Menu({ onClick = () => {} }) {
 		</m.div>
 	);
 
-	content = pathname === SITE_ROUTES.projects && !isMobile ? backMenu : mainMenu;
+	content = pathname === SITE_ROUTES.projects ? backMenu : mainMenu;
 
 	if (MENU_OPTIONS.length === 0) {
 		return null;

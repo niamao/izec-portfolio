@@ -2,23 +2,16 @@
 
 import { useTheme } from 'next-themes';
 
-const withTheme = (WrappedComponent) => {
-	return (props) => {
-	  const { theme } = useTheme();
-	  const themedProps = { ...props, theme };
-  
-	  return <WrappedComponent {...themedProps} />;
-	};
-};
-
-export const SVGComponent = withTheme(({ svgString, width, theme }) => {
+export const SVGComponent = ({ svgString, width }) => {
 	if (typeof DOMParser !== 'undefined') {
+	  const { theme, systemTheme } = useTheme();
+	  const currentTheme =  theme === "system" ? systemTheme : theme;
 	  const parser = new DOMParser();
 	  const doc = parser.parseFromString(svgString, 'image/svg+xml');
 	  const svgElement = doc.documentElement;
   
 	  // Apply theme styles to the SVG
-	  svgElement.style.fill = theme === 'dark' ? '#fff' : '#000';
+	  svgElement.style.fill = currentTheme === 'dark' ? '#fff' : '#000';
   
 	  return (
 		<div style={{ width }}>
@@ -28,4 +21,4 @@ export const SVGComponent = withTheme(({ svgString, width, theme }) => {
 	}
   
 	return null;
-});
+};
