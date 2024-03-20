@@ -5,23 +5,28 @@ import { usePathname } from "next/navigation";
 import { LazyMotion, domAnimation, m } from "framer-motion";
 import { useScrollTo } from "hooks";
 import { BsArrowReturnLeft } from "react-icons/bs";
-import { initial, animate, exit, transition, useMediaQuery } from "utils";
+import { initial, animate, exit, transition } from "utils";
 import { MENU_OPTIONS, SITE_ROUTES, SITE_STRINGS } from "../constants";
 import { useStoreContext } from 'store/provider'
-import { ThemeSwitcher } from "components";
 
 export function Menu({ onClick = () => {} }) {
 	let content, mainMenu, backMenu;
 	const pathname = usePathname();
 	const { setValue } = useStoreContext([]);
 	const { scrollToEl } = useScrollTo();
-	const isMobile = useMediaQuery();
 
 	const sortAscending = (a, b) => a.id - b.id;
 
+	const isOnProject = pathname === SITE_ROUTES.projects
+
 	const handleOnClick = (e) => {
-		scrollToEl(e);
-		window.setTimeout(() => onClick(), 350);
+		if (isOnProject) {
+			setValue([])
+			window.setTimeout(() => onClick(), 350);
+		} else {
+			scrollToEl(e);
+			window.setTimeout(() => onClick(), 350);
+		}
 	};
 
 	mainMenu = (
@@ -49,7 +54,7 @@ export function Menu({ onClick = () => {} }) {
 				href={SITE_ROUTES.home}
 				title={SITE_STRINGS.backToMainPageTitle}
 				className="icon-link-btn"
-				onClick={() => setValue([])}
+				onClick={handleOnClick}
 			>
 				<span>
 					<BsArrowReturnLeft />
@@ -59,7 +64,7 @@ export function Menu({ onClick = () => {} }) {
 		</m.div>
 	);
 
-	content = pathname === SITE_ROUTES.projects ? backMenu : mainMenu;
+	content = isOnProject ? backMenu : mainMenu;
 
 	if (MENU_OPTIONS.length === 0) {
 		return null;

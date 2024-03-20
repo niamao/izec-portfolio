@@ -18,7 +18,7 @@ import {
 } from "utils";
 import { useStoreContext } from 'store/provider'
 import { FilterDropDown } from "./FilterDropDown";
-import { SegmentedControl } from '@mantine/core';
+import { SegmentedControl, Divider } from '@mantine/core';
 import { CiSearch } from "react-icons/ci";
 import { IoMdClose } from "react-icons/io";
 
@@ -41,19 +41,21 @@ export function Filter() {
 		}
 	}) || []
 
-	const FilterType = () => (
+	const FilterType = ({ showSwitch }) => (
 		<div className="flex flex-row items-center space-x-3">
 		   <h3 aria-label="Filter projects" tabIndex="0" className="font-bold text-xl">
 			   Filter: 
 		   </h3>
-		   <SegmentedControl
-			   value={filterType}
-			   onChange={setFilterType}
-			   data={[
-				   { label: 'Strict', value: 'all' },
-				   { label: 'Any', value: 'some' }
-			   ]}
-		   />
+		   {showSwitch && (
+			<SegmentedControl
+				value={filterType}
+				onChange={setFilterType}
+				data={[
+					{ label: 'Strict', value: 'all' },
+					{ label: 'Any', value: 'some' }
+				]}
+			/>
+		   )}
 		</div>
 	)
 
@@ -68,7 +70,7 @@ export function Filter() {
 				}}
 			>
 				<div className="flex flex-row items-center space-x-3">
-					<FilterType />
+					<FilterType showSwitch={!isMobile} />
 					{isMobile && (
 						<LazyMotion features={domAnimation}>
 							<m.button
@@ -93,7 +95,7 @@ export function Filter() {
 										style={{ marginLeft: 0 }}
 									>
 										<header className="p-6 flex items-center justify-between border-b border-b-brand-light z-10">
-											<FilterType />
+											<FilterType showSwitch />
 											<button
 												onClick={onClose}
 												className="w-10 h-10 inline-flex items-center justify-center"
@@ -128,6 +130,7 @@ export function Filter() {
 					)}
 				</div>
 			</div>
+			<Divider my="xs"/>
 		</LazyMotion>
 	);
 }
