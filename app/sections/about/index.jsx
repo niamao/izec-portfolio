@@ -5,6 +5,7 @@ import {LazyMotion, domAnimation, useInView} from "framer-motion";
 import {HeadingDivider} from "components";
 import {TimeLine} from "./TimeLine";
 import { useStoreContext } from 'store/provider'
+import { ScrollArea } from '@mantine/core';
 
 const BlockContent = require('@sanity/block-content-to-react')
 
@@ -72,7 +73,11 @@ export function AboutSection() {
 						)}
 					</div>
 				</div>
-				{profile && profile.timeline && <TimeLine timeline={profile.timeline} />}
+				{profile && profile.timeline && (
+					<ScrollArea scrollbars='x' offsetScrollbars w="99%" scrollbarSize={5} type="never">
+						<TimeLine timeline={profile.timeline} />
+					</ScrollArea>
+				)}
 			</section>
 		</LazyMotion>
 	);

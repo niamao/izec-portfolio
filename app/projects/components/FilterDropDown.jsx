@@ -27,7 +27,8 @@ export function FilterDropDown({
   hidePickedOptions,
   comboboxProps,
   nothingFoundMessage,
-  placeholder
+  placeholder,
+  keepOpen
 }) {
   const [checked, setChecked] = useState(false); 
   const [search, setSearch] = useState('');
@@ -159,6 +160,7 @@ export function FilterDropDown({
         onOptionSubmit={handleValueSelect}
         withinPortal={false}
         { ...comboboxProps }
+        offset={3}
     >
       <Combobox.DropdownTarget>
         <PillsInput
@@ -189,7 +191,9 @@ export function FilterDropDown({
                     </Pill>
                   </Popover.Target>
                   <Popover.Dropdown>
-                    {hiddenValues}
+                    <ScrollArea h="190" scrollbars='y' scrollbarSize={5} offsetScrollbars>
+                      {hiddenValues}
+                    </ScrollArea>
                     <Divider my="sm" />
                     {hiddenValues.length >= 2 && (
                       <div
@@ -226,6 +230,8 @@ export function FilterDropDown({
                   }
                 }}
                 onClick={() => combobox.openDropdown()}
+                autoFocus={keepOpen}
+                onFocus={() => keepOpen && combobox.openDropdown()}
               />
             </Combobox.EventsTarget>
           </Pill.Group>
@@ -258,7 +264,7 @@ export function FilterDropDown({
           </div>
         </Combobox.Header>
         <Combobox.Options>
-          <ScrollArea.Autosize mah={200} type="scroll">
+          <ScrollArea.Autosize mah={200} type="scroll" scrollbarSize={5} offsetScrollbars>
             {totalOptions > 0 ? groups : emptyOption }
           </ScrollArea.Autosize>
         </Combobox.Options>
